@@ -20,6 +20,13 @@ import javafx.stage.Stage;
  */
 public class SelectorRaid extends Stage {
     
+    Button raid0;
+    Button raid1;
+    Button raid2;
+    Button raid3;
+    Button raid4;
+    Button raid5;
+    Button raid6;
     
     public SelectorRaid(){
         BorderPane root = new BorderPane();
@@ -27,33 +34,32 @@ public class SelectorRaid extends Stage {
         this.setScene(scene);
         this.setTitle("Seleccione raid");
         
-        
         root.setCenter(this.inicializarBotones());
     }
     
     private VBox inicializarBotones(){
         VBox vb = new VBox();
-        Button raid0 = new Button("Raid 0");
+        raid0 = new Button("Raid 0");
         raid0.setPrefSize(100, 40);
-        raid0.setOnAction(this::raid0);
-        Button raid1 = new Button("Raid 1");
+        
+        raid1 = new Button("Raid 1");
         raid1.setPrefSize(100, 40);
-        raid1.setOnAction(this::raid1);
-        Button raid2 = new Button("Raid 2");
+        
+        raid2 = new Button("Raid 2");
         raid2.setPrefSize(100, 40);
-        raid2.setOnAction(this::raid2);
-        Button raid3 = new Button("Raid 3");
+        
+        raid3 = new Button("Raid 3");
         raid3.setPrefSize(100, 40);
-        raid3.setOnAction(this::raid3);
-        Button raid4 = new Button("Raid 4");
+        
+        raid4 = new Button("Raid 4");
         raid4.setPrefSize(100, 40);
-        raid4.setOnAction(this::raid4);
-        Button raid5 = new Button("Raid 5");
+        
+        raid5 = new Button("Raid 5");
         raid5.setPrefSize(100, 40);
-        raid5.setOnAction(this::raid5);
-        Button raid6 = new Button("Raid 6");
+        
+        raid6 = new Button("Raid 6");
         raid6.setPrefSize(100, 40);
-        raid6.setOnAction(this::raid6);
+        
         vb.getChildren().addAll(raid0,raid1,raid2,raid3,raid4,raid5,raid6);
         vb.setSpacing(20);
         vb.setAlignment(Pos.CENTER);
@@ -61,32 +67,6 @@ public class SelectorRaid extends Stage {
         return vb;
     }
     
-    void raid0(ActionEvent e){
-        
-    }
-    
-    void raid1(ActionEvent e){
-        
-    }
-    
-    void raid2(ActionEvent e){
-        
-    }
-    
-    void raid3(ActionEvent e){
-        
-    }
-    
-    void raid4(ActionEvent e){
-        
-    }
-    
-    void raid5(ActionEvent e){
-        
-    }
-    
-    void raid6(ActionEvent e){
-        
-    }
+
     
 }
