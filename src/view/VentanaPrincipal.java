@@ -5,15 +5,14 @@
  */
 package view;
 
-import java.io.File;
-import java.util.ArrayList;
-import javafx.event.ActionEvent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import model.SO;
 
 /**
@@ -21,20 +20,43 @@ import model.SO;
  * @author Vandal
  */
 public class VentanaPrincipal extends BorderPane {
-    
-   
     private SO so;
     
     Button btnSubir;
+    Button btnMostrar;
     
     public VentanaPrincipal(SO so){
         
         this.so = so;
         btnSubir = new Button("Subir Archivo");
+        btnMostrar = new Button("Mostrar Archivo");
         
-        this.setCenter(btnSubir);
+        this.setLeft(this.panelIzq());
+        this.setCenter(this.panelCentral());
         
-        
+    }
+    
+    private Node panelIzq(){
+        VBox vb = new VBox();
+        this.setLeft(btnSubir);
+        btnSubir.setPrefSize(150, 40);
+        this.setLeft(btnMostrar);
+        btnMostrar.setPrefSize(150, 40);
+        vb.getChildren().addAll(btnSubir, btnMostrar);
+        vb.setSpacing(20);
+        vb.setAlignment(Pos.CENTER_LEFT);
+        vb.setPadding(new Insets(20,20,20,20));
+        return vb;
+    }
+    
+    private Node panelCentral(){
+        BorderPane vb = new BorderPane();
+        TextField tf = new TextField();
+        tf.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        tf.setEditable(false);
+        vb.setCenter(tf);
+        vb.setPadding(new Insets(10));
+        return vb;
     }
     
     
