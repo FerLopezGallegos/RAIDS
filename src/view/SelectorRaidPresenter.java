@@ -47,7 +47,7 @@ public class SelectorRaidPresenter {
 
     void raid1(ActionEvent e) {
         System.out.println("AUCH 1");
-        Raid1Controller raid1 = new Raid1Controller(file);
+        Raid1Controller raid1 = new Raid1Controller(file, so);
     }
 
     void raid2(ActionEvent e) {

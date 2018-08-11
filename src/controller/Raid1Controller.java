@@ -5,31 +5,45 @@
  */
 package controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import model.Disco;
+import model.SO;
 
 /**
  *
  * @author Vandal
  */
 public class Raid1Controller {
-    
+
     File file;
     ArrayList<String> bloques;
-    public Raid1Controller(File file) {
+
+    public Raid1Controller(File file, SO so) {
         this.file = file;
         bloques = new ArrayList<>();
-        
-        generarBloques();
+        try {
+            crearArchivos();
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
     }
-    
+
     public void generarBloques() {
-        try{
-            
-        
+        try {
+
             StringBuilder sb = new StringBuilder();
             Scanner in = new Scanner(new FileReader(file));
             while (in.hasNext()) {
@@ -47,16 +61,56 @@ public class Raid1Controller {
                 }
                 i += 500;
             }
-            
+
             i = 1;
             for (String bloque : bloques) {
                 System.out.println("bloque " + i + bloque + "\n");
                 i++;
-            } 
-            
-        }catch(Exception e){}
+            }
+
+        } catch (Exception e) {
+        }
     }
-    
-    
-    
+
+    private void crearArchivos() throws IOException {
+        String cadena;
+        String cadena1 = "RAIDS/RAID_1";
+        File directorio = new File(cadena1);
+        if(!directorio.exists()){
+            directorio.mkdir();
+        }
+        int num_discos = 2;
+        int i = 1;
+        while(i <= num_discos){
+            String cadena2 = "/DISCO_"+i;
+            String cadenaAux = cadena1+cadena2;
+            File sub_directorio = new File(cadenaAux);
+            if(!sub_directorio.exists()){
+                sub_directorio.mkdir();
+            }
+            String ruta = cadena1+"/"+cadena2+"/"+file.getName();
+
+            File archivo = new File(ruta);
+            BufferedWriter bw;
+            if (archivo.exists()) {
+                bw = new BufferedWriter(new FileWriter(archivo));
+                FileReader f = new FileReader(file);
+                BufferedReader b = new BufferedReader(f);
+                while ((cadena = b.readLine()) != null) {
+                    bw.write(cadena);
+                }
+            } else {
+                bw = new BufferedWriter(new FileWriter(archivo));
+                FileReader f = new FileReader(file);
+                BufferedReader b = new BufferedReader(f);
+                while ((cadena = b.readLine()) != null) {
+                    bw.write(cadena);
+                }
+            }
+            bw.close();
+            i++;
+        }
+
+    }
+
 }
