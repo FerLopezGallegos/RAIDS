@@ -106,8 +106,12 @@ public class Raid1Controller {
 
     }
 
-    public void cargarArchivo(File file) throws IOException {
-        this.crearArchivos(file);
+    public void cargarArchivo(File file){
+        try{
+           this.crearArchivos(file); 
+        }
+        catch(Exception e){}
+        
     }
 
 }
