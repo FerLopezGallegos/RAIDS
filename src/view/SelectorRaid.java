@@ -20,6 +20,7 @@ import javafx.stage.Stage;
  */
 public class SelectorRaid extends Stage {
     
+    
     Button raid0;
     Button raid1;
     Button raid2;
