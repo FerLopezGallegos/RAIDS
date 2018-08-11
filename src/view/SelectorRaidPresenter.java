@@ -5,6 +5,8 @@
  */
 package view;
 
+import controller.Raid1Controller;
+import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import model.SO;
@@ -18,12 +20,13 @@ public class SelectorRaidPresenter {
     SO so;
     SelectorRaid sr;
     Stage stage;
+    File file;
 
-    public SelectorRaidPresenter(SO so, SelectorRaid sr, Stage stage) {
+    public SelectorRaidPresenter(SO so, SelectorRaid sr, Stage stage, File file) {
         this.so = so;
         this.stage = stage;
         this.sr = sr;
-
+        this.file = file;
         attachEvents();
 
     }
@@ -44,6 +47,7 @@ public class SelectorRaidPresenter {
 
     void raid1(ActionEvent e) {
         System.out.println("AUCH 1");
+        Raid1Controller raid1 = new Raid1Controller(file);
     }
 
     void raid2(ActionEvent e) {

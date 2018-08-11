@@ -47,7 +47,7 @@ public class VentanaPrincipalPresenter {
         File file = fc.showOpenDialog(stage);
         try {
             System.out.println("FILE LENGHT " + file.length());
-            SelectorRaidPresenter srp = new SelectorRaidPresenter(so, selector, stage);
+            SelectorRaidPresenter srp = new SelectorRaidPresenter(so, selector, stage, file);
             this.selector.showAndWait();
             this.archivos.add(file);
 
