@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
-
-import java.io.Serializable;
+package controller;
 
 /**
  *
- * @author fernandalopezgallegos
+ * @author Vandal
  */
-public class Bloque implements Serializable{
+public class Raid5Controller {
     
 }
