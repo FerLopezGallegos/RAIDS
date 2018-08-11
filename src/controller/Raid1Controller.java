@@ -28,20 +28,13 @@ import model.SO;
  */
 public class Raid1Controller {
 
-    File file;
     ArrayList<String> bloques;
 
-    public Raid1Controller(File file, SO so) {
-        this.file = file;
-        bloques = new ArrayList<>();
-        try {
-            crearArchivos();
-        } catch (Exception e) {
-            System.out.println("Error");
-        }
+    public Raid1Controller() {
+
     }
 
-    public void generarBloques() {
+    public void generarBloques(File file) {
         try {
 
             StringBuilder sb = new StringBuilder();
@@ -72,7 +65,7 @@ public class Raid1Controller {
         }
     }
 
-    private void crearArchivos() throws IOException {
+    private void crearArchivos(File file) throws IOException {
         String cadena;
         String cadena1 = "RAIDS/RAID_1";
         File directorio = new File(cadena1);
@@ -111,6 +104,10 @@ public class Raid1Controller {
             i++;
         }
 
+    }
+
+    public void cargarArchivo(File file) throws IOException {
+        this.crearArchivos(file);
     }
 
 }

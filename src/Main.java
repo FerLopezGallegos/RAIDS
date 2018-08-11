@@ -25,6 +25,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         SO so = new SO(); //Sistema operativo
+        
         VentanaPrincipal vp = new VentanaPrincipal(so);
         
         Scene scene = new Scene(vp,800,600);
