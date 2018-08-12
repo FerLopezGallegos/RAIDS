@@ -9,6 +9,7 @@ import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import model.SO;
+import model.TipoRaid;
 
 /**
  *
@@ -20,12 +21,14 @@ public class SelectorRaidPresenter {
     SelectorRaid sr;
     Stage stage;
     File file;
+    VentanaPrincipalPresenter vpp;
 
-    public SelectorRaidPresenter(SO so, SelectorRaid sr, Stage stage, File file) {
+    public SelectorRaidPresenter(SO so, SelectorRaid sr, Stage stage, File file, VentanaPrincipalPresenter vpp) {
         this.so = so;
         this.stage = stage;
         this.sr = sr;
         this.file = file;
+        this.vpp = vpp;
         attachEvents();
 
     }
@@ -43,36 +46,44 @@ public class SelectorRaidPresenter {
     void raid0(ActionEvent e) {
         System.out.println("AUCH 0");
         this.so.getControladorRaid0().cargarArchivo(file);
+        this.vpp.agregarArchivoRaid(file, TipoRaid.RAID0);
+        this.sr.close();
     }
 
     void raid1(ActionEvent e) {
         System.out.println("AUCH 1");
         this.so.getControladorRaid1().cargarArchivo(file);
-        this.stage.close();
+        this.vpp.agregarArchivoRaid(file, TipoRaid.RAID1);
+        this.sr.close();
     }
 
     void raid2(ActionEvent e) {
         System.out.println("AUCH 2");
-        this.stage.close();
+        this.vpp.agregarArchivoRaid(file, TipoRaid.RAID2);
+        this.sr.close();
     }
 
     void raid3(ActionEvent e) {
         System.out.println("AUCH 3");
-        this.stage.close();
+        this.vpp.agregarArchivoRaid(file, TipoRaid.RAID3);
+        this.sr.close();
     }
 
     void raid4(ActionEvent e) {
         System.out.println("AUCH 4");
-        this.stage.close();
+        this.vpp.agregarArchivoRaid(file, TipoRaid.RAID4);
+        this.sr.close();
     }
 
     void raid5(ActionEvent e) {
         System.out.println("AUCH 5");
-        this.stage.close();
+        this.vpp.agregarArchivoRaid(file, TipoRaid.RAID5);
+        this.sr.close();
     }
 
     void raid6(ActionEvent e) {
         System.out.println("AUCH 6");
-        this.stage.close();
+        this.vpp.agregarArchivoRaid(file, TipoRaid.RAID6);
+        this.sr.close();
     }
 }
