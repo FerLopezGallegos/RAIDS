@@ -5,7 +5,6 @@
  */
 package view;
 
-import controller.Raid1Controller;
 import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
@@ -43,30 +42,37 @@ public class SelectorRaidPresenter {
 
     void raid0(ActionEvent e) {
         System.out.println("AUCH 0");
+        this.so.getControladorRaid0().cargarArchivo(file);
     }
 
     void raid1(ActionEvent e) {
         System.out.println("AUCH 1");
         this.so.getControladorRaid1().cargarArchivo(file);
+        this.stage.close();
     }
 
     void raid2(ActionEvent e) {
         System.out.println("AUCH 2");
+        this.stage.close();
     }
 
     void raid3(ActionEvent e) {
         System.out.println("AUCH 3");
+        this.stage.close();
     }
 
     void raid4(ActionEvent e) {
         System.out.println("AUCH 4");
+        this.stage.close();
     }
 
     void raid5(ActionEvent e) {
         System.out.println("AUCH 5");
+        this.stage.close();
     }
 
     void raid6(ActionEvent e) {
         System.out.println("AUCH 6");
+        this.stage.close();
     }
 }
