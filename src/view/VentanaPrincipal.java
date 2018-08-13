@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -24,6 +25,7 @@ public class VentanaPrincipal extends BorderPane {
     
     Button btnSubir;
     Button btnMostrar;
+    TextArea tf;
     
     public VentanaPrincipal(SO so){
         
@@ -51,9 +53,11 @@ public class VentanaPrincipal extends BorderPane {
     
     private Node panelCentral(){
         BorderPane vb = new BorderPane();
-        TextField tf = new TextField();
-        tf.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        tf = new TextArea();
         tf.setEditable(false);
+        tf.autosize();
+        tf.setWrapText(true);
+        
         vb.setCenter(tf);
         vb.setPadding(new Insets(10));
         return vb;

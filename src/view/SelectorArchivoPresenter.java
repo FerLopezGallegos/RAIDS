@@ -54,6 +54,7 @@ public class SelectorArchivoPresenter {
         switch (tipo){
             case RAID0:
                 System.out.println("Desfragmentar raid 0");
+                this.vpp.vp.tf.setText(this.so.getControladorRaid0().armar(nombreArchivo));
                 break;
             case RAID1:
                 System.out.println("Desfragmentar raid 1");
