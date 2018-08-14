@@ -106,6 +106,7 @@ public class Raid0Controller implements Serializable {
     }
 
     public void cargarArchivo(File file) {
+        this.segmentos.clear();
         try {
             this.repartirArchivo(file);
         } catch (Exception e) {
