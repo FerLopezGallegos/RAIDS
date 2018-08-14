@@ -23,7 +23,6 @@ public class SelectorRaid extends Stage {
     
     Button raid0;
     Button raid1;
-    Button raid2;
     Button raid3;
     Button raid4;
     Button raid5;
@@ -46,9 +45,6 @@ public class SelectorRaid extends Stage {
         raid1 = new Button("Raid 1");
         raid1.setPrefSize(100, 40);
         
-        raid2 = new Button("Raid 2");
-        raid2.setPrefSize(100, 40);
-        
         raid3 = new Button("Raid 3");
         raid3.setPrefSize(100, 40);
         
@@ -61,7 +57,7 @@ public class SelectorRaid extends Stage {
         raid6 = new Button("Raid 6");
         raid6.setPrefSize(100, 40);
         
-        vb.getChildren().addAll(raid0,raid1,raid2,raid3,raid4,raid5,raid6);
+        vb.getChildren().addAll(raid0,raid1,raid3,raid4,raid5,raid6);
         vb.setSpacing(20);
         vb.setAlignment(Pos.CENTER);
         vb.setPadding(new Insets(20,20,20,20));

@@ -99,7 +99,7 @@ public class Raid3Controller implements Serializable {
             byteValueAscii = string.getBytes("US-ASCII");
             System.out.println(Arrays.toString(byteValueAscii));
             for (int i = 0; i < byteValueAscii.length; i++) {
-                System.out.println(Integer.toBinaryString(byteValueAscii[i]));
+                //System.out.println(Integer.toBinaryString(byteValueAscii[i]));
                 String binario = Integer.toBinaryString(byteValueAscii[i]);
                 String pi = calcularParidad(binario);
                 String paridadi = pi + binario;

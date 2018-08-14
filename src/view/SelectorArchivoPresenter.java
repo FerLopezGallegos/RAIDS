@@ -55,7 +55,7 @@ public class SelectorArchivoPresenter {
         String nombreArchivo = this.sr.combo.getSelectionModel().getSelectedItem().toString();
         TipoRaid tipo = vpp.tipoRaidArchivo(nombreArchivo);
         String texto = "";
-        switch (tipo){
+        switch (tipo) {
             case RAID0:
                 System.out.println("Desfragmentar raid 0");
                 texto = this.so.getControladorRaid0().armar(nombreArchivo);
@@ -65,14 +65,6 @@ public class SelectorArchivoPresenter {
                 System.out.println("Desfragmentar raid 1");
                 texto = this.so.getControladorRaid1().armar(nombreArchivo);
                 this.vpp.vp.tf.setText(texto);
-                String res1 = this.so.getControladorRaid1().armar(nombreArchivo);
-                if(res1 != null){
-                    this.vpp.vp.tf.setText(res1);
-                }
-                else{
-                    this.mostrarAlerta();
-                }
-                
                 break;
             case RAID2:
                 System.out.println("Desfragmentar raid 2");
@@ -82,8 +74,10 @@ public class SelectorArchivoPresenter {
                 String res = this.so.getControladorRaid3().armar(nombreArchivo);
                 if (res != null) {
                     this.vpp.vp.tf.setText(res);
+                    texto = res;
                 } else {
                     this.mostrarAlerta();
+                    this.sr.close();
                 }
 
                 break;
@@ -98,10 +92,16 @@ public class SelectorArchivoPresenter {
                 System.out.println("Desfragmentar raid 5");
                 break;
             case RAID6:
+                texto = this.so.getControladorRaid6().armar(nombreArchivo);
+                this.vpp.vp.tf.setText(texto);
                 System.out.println("Desfragmentar raid 6");
                 break;
         }
-        this.vpp.vp.caracteres.setText(""+texto.length());
+        if (texto == "") {
+            this.mostrarAlerta();
+            this.sr.close();
+        }
+        this.vpp.vp.caracteres.setText("" + texto.length());
         this.vpp.vp.nombreArchivo.setText(nombreArchivo);
         this.sr.close();
     }

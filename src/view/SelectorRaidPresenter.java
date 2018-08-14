@@ -36,7 +36,6 @@ public class SelectorRaidPresenter {
     private void attachEvents() {
         sr.raid0.setOnAction(this::raid0);
         sr.raid1.setOnAction(this::raid1);
-        sr.raid2.setOnAction(this::raid2);
         sr.raid3.setOnAction(this::raid3);
         sr.raid4.setOnAction(this::raid4);
         sr.raid5.setOnAction(this::raid5);
@@ -54,12 +53,6 @@ public class SelectorRaidPresenter {
         System.out.println("AUCH 1");
         this.so.getControladorRaid1().cargarArchivo(file);
         this.vpp.agregarArchivoRaid(file, TipoRaid.RAID1);
-        this.sr.close();
-    }
-
-    void raid2(ActionEvent e) {
-        System.out.println("AUCH 2");
-        this.vpp.agregarArchivoRaid(file, TipoRaid.RAID2);
         this.sr.close();
     }
 
