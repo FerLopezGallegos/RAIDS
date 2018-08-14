@@ -8,10 +8,12 @@ package controller;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +21,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
+import model.Bloque;
 import model.Disco;
 import model.SO;
 
@@ -112,6 +115,37 @@ public class Raid1Controller {
         }
         catch(Exception e){}
         
+    }
+    
+    public String armar(String string) {
+        String ruta1 = "RAIDS/RAID_1/DISCO_1/" + string;
+        String ruta2 = "RAIDS/RAID_1/DISCO_2/" + string;
+        ruta1= ruta1.trim();
+        ruta2= ruta2.trim();
+        File file1 = new File(ruta1);
+        File file2 = new File(ruta2);
+        String archivoCompleto = "";
+        if (file1.exists()) {
+            try {
+                Scanner scan = new Scanner(file1);
+                while (scan.hasNextLine()){
+                    archivoCompleto += scan.nextLine();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if (file1.exists()){
+            try {
+                Scanner scan = new Scanner(file2);
+                while (scan.hasNextLine()){
+                    archivoCompleto += scan.nextLine();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return archivoCompleto;
     }
 
 }

@@ -12,5 +12,5 @@ import java.io.Serializable;
  * @author Vandal
  */
 public enum TipoRaid implements Serializable{
-    RAID0,RAID1,RAID2,RAID3,RAID4,RAID5,RAID6
+    RAID0,RAID1,RAID2,RAID3,RAID4,RAID5,RAID6;
 }
