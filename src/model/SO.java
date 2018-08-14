@@ -7,7 +7,6 @@ package model;
 
 import controller.Raid0Controller;
 import controller.Raid1Controller;
-import controller.Raid2Controller;
 import controller.Raid3Controller;
 import controller.Raid4Controller;
 import controller.Raid5Controller;
@@ -21,7 +20,6 @@ public class SO {
     
     private Raid0Controller controladorRaid0;
     private Raid1Controller controladorRaid1;
-    private Raid2Controller controladorRaid2;
     private Raid3Controller controladorRaid3;
     private Raid4Controller controladorRaid4;
     private Raid5Controller controladorRaid5;
@@ -30,7 +28,6 @@ public class SO {
     public SO() {
         this.controladorRaid0 = new Raid0Controller();
         this.controladorRaid1 = new Raid1Controller();
-        this.controladorRaid2 = new Raid2Controller();
         this.controladorRaid3 = new Raid3Controller();
         this.controladorRaid4 = new Raid4Controller();
         this.controladorRaid5 = new Raid5Controller();
@@ -45,10 +42,6 @@ public class SO {
 
     public Raid1Controller getControladorRaid1() {
         return controladorRaid1;
-    }
-
-    public Raid2Controller getControladorRaid2() {
-        return controladorRaid2;
     }
 
     public Raid3Controller getControladorRaid3() {
