@@ -25,6 +25,10 @@ public class Raid5Controller implements Serializable {
 
     ArrayList<String> segmentos = new ArrayList<String>();
 
+    public String armar(String nombreArchivo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private class BloqueRaid5 extends Bloque implements Serializable {
 
         TipoBloque tipoB;
@@ -191,12 +195,12 @@ public class Raid5Controller implements Serializable {
 
             int i = 0;
             while (i < string.length()) {
-                if (i + 500 < string.length()) {
-                    segmentos.add(string.substring(i, i + 500));
+                if (i + 1000 < string.length()) {
+                    segmentos.add(string.substring(i, i + 1000));
                 } else {
                     segmentos.add(string.substring(i, string.length() - 1));
                 }
-                i += 500;
+                i += 1000;
             }
 
         } catch (Exception e) {

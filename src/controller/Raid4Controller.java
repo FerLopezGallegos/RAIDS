@@ -6,9 +6,11 @@
 package controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,9 +23,10 @@ import model.TipoRaid;
  *
  * @author Vandal
  */
-public class Raid4Controller implements Serializable{
+public class Raid4Controller implements Serializable {
 
     ArrayList<String> segmentos = new ArrayList<String>();
+
 
     private class BloqueRaid4 extends Bloque implements Serializable {
 
@@ -48,9 +51,6 @@ public class Raid4Controller implements Serializable{
 
     public void crearArchivosSegmento(int iteracion, String nombre) {
         String segmento = this.segmentos.get(iteracion);
-        if (segmento.length() % 2 == 0) {
-            segmento = segmento += " ";
-        }
         String seg1 = this.convertirABinario(segmento.substring(0, segmento.length() / 2));
         String seg2 = this.convertirABinario(segmento.substring(segmento.length() / 2, segmento.length()));
         String paridad = xor(seg1, seg2);
@@ -147,15 +147,101 @@ public class Raid4Controller implements Serializable{
 
             int i = 0;
             while (i < string.length()) {
-                if (i + 500 < string.length()) {
-                    segmentos.add(string.substring(i, i + 500));
+                if (i + 1000 < string.length()) {
+                    segmentos.add(string.substring(i, i + 1000));
                 } else {
                     segmentos.add(string.substring(i, string.length() - 1));
                 }
-                i += 500;
+                i += 1000;
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+    
+    public String armar(String string) {
+        String ruta = "RAIDS/RAID_4/DISCO_1/0" + string;
+        ruta= ruta.trim();
+        File file = new File(ruta);
+        BloqueRaid4 bloque = null;
+        String archivoCompleto = "";
+        if (file.exists()) {
+            try {
+                FileInputStream fileIn = new FileInputStream(new File(ruta));
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                bloque = (BloqueRaid4) in.readObject();
+                in.close();
+                fileIn.close();
+                if (bloque != null) {
+                    ArrayList<BloqueRaid4> completo = this.buscarArchivos(bloque);
+                    for (int i = 0; i < completo.size(); i++) {
+                        archivoCompleto += this.convertirAString(completo.get(i).getContenido());
+                        System.out.println(archivoCompleto.length());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return archivoCompleto;
+    }
+    
+    
+    public ArrayList<BloqueRaid4> buscarArchivos(BloqueRaid4 inicio) {
+        ArrayList<BloqueRaid4> completo = new ArrayList<>();
+        int cantidad = inicio.getNumeroTotal();
+        String ruta1;
+        String ruta2;
+        File file1;
+        File file2;
+        BloqueRaid4 nuevo;
+        FileInputStream fileIn;
+        ObjectInputStream in;
+        for (int i = 0; i < cantidad; i++) {
+            ruta1 = "RAIDS/RAID_4/DISCO_1/" + i + inicio.getNombreArchivo();
+            ruta2 = "RAIDS/RAID_4/DISCO_2/" + i + inicio.getNombreArchivo();
+            System.out.println(ruta1+" "+ruta2);
+            file1 = new File(ruta1);
+            file2 = new File(ruta2);
+            if (file1.exists() && file2.exists()) {
+                try {
+                    fileIn = new FileInputStream(file1);
+                    in = new ObjectInputStream(fileIn);
+                    nuevo = (BloqueRaid4) in.readObject();
+                    completo.add(nuevo);
+                    fileIn = new FileInputStream(file2);
+                    in = new ObjectInputStream(fileIn);
+                    nuevo = (BloqueRaid4) in.readObject();
+                    completo.add(nuevo);
+                    in.close();
+                    fileIn.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return completo;
+    }
+
+    public static String convertirAString(String input) {
+        String output = "";
+        String[] inputs = null;
+        inputs = new String[input.length() / 8];
+        int k = 0;
+        for (int i = 0; i < input.length() / 8; i++)
+        {
+            inputs[i] = "";
+        }
+        for (int i = 0; i < input.length(); i += 8) {
+            inputs[k] = input.substring(i, i + 8) + "";
+            k++;
+        }
+        for (int i = 0; i < inputs.length; i++) {
+            int temp = Integer.parseInt(inputs[i], 2);
+            output = output + (char) temp;
+        }
+        return output;
     }
 }

@@ -26,6 +26,8 @@ public class VentanaPrincipal extends BorderPane {
     Button btnSubir;
     Button btnMostrar;
     TextArea tf;
+    TextField nombreArchivo;
+    TextField caracteres;
     
     public VentanaPrincipal(SO so){
         
@@ -53,13 +55,28 @@ public class VentanaPrincipal extends BorderPane {
     
     private Node panelCentral(){
         BorderPane vb = new BorderPane();
+        nombreArchivo = new TextField();
+        nombreArchivo.setEditable(false);
+        nombreArchivo.setPrefWidth(500);
+        this.caracteres = new TextField();
+        this.caracteres.setEditable(false);
+        this.caracteres.setMinWidth(200);
+        
+        HBox hb = new HBox();
+        hb.setSpacing(10);
+        hb.setPadding(new Insets(0,0,10,0));
+        hb.getChildren().addAll(nombreArchivo, caracteres);
+        hb.setAlignment(Pos.CENTER_LEFT);
+        
         tf = new TextArea();
         tf.setEditable(false);
         tf.autosize();
         tf.setWrapText(true);
         
+        vb.setTop(hb);
         vb.setCenter(tf);
         vb.setPadding(new Insets(10));
+        
         return vb;
     }
     
