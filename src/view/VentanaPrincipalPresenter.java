@@ -47,6 +47,8 @@ public class VentanaPrincipalPresenter {
         this.stage = stage;
         this.vp = vp;
         this.limpiarDirectorio();
+        stage.setMinHeight(600);
+        stage.setMinWidth(800);
         attachEvents();
     }
 
