@@ -6,9 +6,11 @@
 package controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,8 +27,101 @@ public class Raid5Controller implements Serializable {
 
     ArrayList<String> segmentos = new ArrayList<String>();
 
-    public String armar(String nombreArchivo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String armar(String string) {
+        String ruta = "RAIDS/RAID_5/DISCO_1/0" + string;
+        ruta = ruta.trim();
+        File file = new File(ruta);
+        Raid5Controller.BloqueRaid5 bloque = null;
+        String archivoCompleto = "";
+        if (file.exists()) {
+            try {
+                FileInputStream fileIn = new FileInputStream(new File(ruta));
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                bloque = (Raid5Controller.BloqueRaid5) in.readObject();
+                in.close();
+                fileIn.close();
+                if (bloque != null) {
+                    ArrayList<Raid5Controller.BloqueRaid5> completo = this.buscarArchivos(bloque);
+                    for (int i = 0; i < completo.size(); i++) {
+                        archivoCompleto += this.convertirAString(completo.get(i).getContenido());
+                        System.out.println(archivoCompleto.length());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return archivoCompleto;
+    }
+
+    public ArrayList<Raid5Controller.BloqueRaid5> buscarArchivos(Raid5Controller.BloqueRaid5 inicio) {
+        ArrayList<Raid5Controller.BloqueRaid5> completo = new ArrayList<>();
+        int cantidad = inicio.getNumeroTotal();
+        String ruta1="";
+        String ruta2="";
+        String ruta3="";
+        File file1;
+        File file2;
+        File file3;
+        Raid5Controller.BloqueRaid5 nuevo;
+        FileInputStream fileIn;
+        ObjectInputStream in;
+        for (int i = 0; i < cantidad; i++) {
+            int discoParidad = i % 3;
+            switch (discoParidad) {
+                case 0:
+                    discoParidad = 3;
+                    break;
+                case 1:
+                    discoParidad = 2;
+                    break;
+                case 2:
+                    discoParidad = 1;
+                    break;
+            }
+            switch (discoParidad) {
+                case 1:
+                    ruta1 = "RAIDS/RAID_5/DISCO_1/p" + i + inicio.getNombreArchivo();
+                    ruta2 = "RAIDS/RAID_5/DISCO_2/" + i + inicio.getNombreArchivo();
+                    ruta3 = "RAIDS/RAID_5/DISCO_3/" + i + inicio.getNombreArchivo();
+                    break;
+                case 2:
+                    ruta1 = "RAIDS/RAID_5/DISCO_1/" + i + inicio.getNombreArchivo();
+                    ruta2 = "RAIDS/RAID_5/DISCO_2/p" + i + inicio.getNombreArchivo();
+                    ruta3 = "RAIDS/RAID_5/DISCO_3/" + i + inicio.getNombreArchivo();
+                    break;
+                case 3:
+                    ruta1 = "RAIDS/RAID_5/DISCO_1/" + i + inicio.getNombreArchivo();
+                    ruta2 = "RAIDS/RAID_5/DISCO_2/" + i + inicio.getNombreArchivo();
+                    ruta3 = "RAIDS/RAID_5/DISCO_3/p" + i + inicio.getNombreArchivo();
+                    break;
+            }
+            file1 = new File(ruta1);
+            file2 = new File(ruta2);
+            file3 = new File(ruta3);
+            if (file1.exists() && file2.exists() && file3.exists()) {
+                try {
+                    fileIn = new FileInputStream(file1);
+                    in = new ObjectInputStream(fileIn);
+                    nuevo = (Raid5Controller.BloqueRaid5) in.readObject();
+                    if (nuevo.tipoB==TipoBloque.NORMAL) completo.add(nuevo);
+                    fileIn = new FileInputStream(file2);
+                    in = new ObjectInputStream(fileIn);
+                    nuevo = (Raid5Controller.BloqueRaid5) in.readObject();
+                    if (nuevo.tipoB==TipoBloque.NORMAL) completo.add(nuevo);
+                    fileIn = new FileInputStream(file3);
+                    in = new ObjectInputStream(fileIn);
+                    nuevo = (Raid5Controller.BloqueRaid5) in.readObject();
+                    if (nuevo.tipoB==TipoBloque.NORMAL) completo.add(nuevo);
+                    in.close();
+                    fileIn.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return completo;
     }
 
     private class BloqueRaid5 extends Bloque implements Serializable {
@@ -46,7 +141,7 @@ public class Raid5Controller implements Serializable {
         this.crearDirectorios(5, 3);
         this.generarSegmentos(file);
         for (int i = 0; i < segmentos.size(); i++) {
-            this.crearArchivosSegmento(i,file.getName());
+            this.crearArchivosSegmento(i, file.getName());
         }
     }
 
@@ -64,16 +159,13 @@ public class Raid5Controller implements Serializable {
                 discoParidad = 1;
                 break;
         }
-        if (segmento.length() % 2 == 0) {
-            segmento = segmento += " ";
-        }
         String seg1 = this.convertirABinario(segmento.substring(0, segmento.length() / 2));
         String seg2 = this.convertirABinario(segmento.substring(segmento.length() / 2, segmento.length()));
         String paridad = xor(seg1, seg2);
         String ruta1 = "";
         String ruta2 = "";
         String ruta3 = "";
-        switch (discoParidad){
+        switch (discoParidad) {
             case 1:
                 ruta1 = "RAIDS/RAID_5/DISCO_1/p" + iteracion + nombre;
                 ruta2 = "RAIDS/RAID_5/DISCO_2/" + iteracion + nombre;
@@ -113,10 +205,10 @@ public class Raid5Controller implements Serializable {
                 guardarArchivo(bloque3, archivo3);
                 break;
         }
-        
+
     }
-    
-    private void guardarArchivo(BloqueRaid5 bloque, File archivo){
+
+    private void guardarArchivo(BloqueRaid5 bloque, File archivo) {
         FileOutputStream fileOut;
         ObjectOutputStream out;
         if (archivo.exists() == false) {
@@ -205,6 +297,25 @@ public class Raid5Controller implements Serializable {
 
         } catch (Exception e) {
         }
+    }
+
+    public static String convertirAString(String input) {
+        String output = "";
+        String[] inputs = null;
+        inputs = new String[input.length() / 8];
+        int k = 0;
+        for (int i = 0; i < input.length() / 8; i++) {
+            inputs[i] = "";
+        }
+        for (int i = 0; i < input.length(); i += 8) {
+            inputs[k] = input.substring(i, i + 8) + "";
+            k++;
+        }
+        for (int i = 0; i < inputs.length; i++) {
+            int temp = Integer.parseInt(inputs[i], 2);
+            output = output + (char) temp;
+        }
+        return output;
     }
 
 }

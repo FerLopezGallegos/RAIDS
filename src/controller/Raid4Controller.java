@@ -27,7 +27,6 @@ public class Raid4Controller implements Serializable {
 
     ArrayList<String> segmentos = new ArrayList<String>();
 
-
     private class BloqueRaid4 extends Bloque implements Serializable {
 
         TipoBloque tipoB;
@@ -159,10 +158,10 @@ public class Raid4Controller implements Serializable {
             e.printStackTrace();
         }
     }
-    
+
     public String armar(String string) {
         String ruta = "RAIDS/RAID_4/DISCO_1/0" + string;
-        ruta= ruta.trim();
+        ruta = ruta.trim();
         File file = new File(ruta);
         BloqueRaid4 bloque = null;
         String archivoCompleto = "";
@@ -184,11 +183,10 @@ public class Raid4Controller implements Serializable {
                 e.printStackTrace();
             }
         }
-        
+
         return archivoCompleto;
     }
-    
-    
+
     public ArrayList<BloqueRaid4> buscarArchivos(BloqueRaid4 inicio) {
         ArrayList<BloqueRaid4> completo = new ArrayList<>();
         int cantidad = inicio.getNumeroTotal();
@@ -202,7 +200,7 @@ public class Raid4Controller implements Serializable {
         for (int i = 0; i < cantidad; i++) {
             ruta1 = "RAIDS/RAID_4/DISCO_1/" + i + inicio.getNombreArchivo();
             ruta2 = "RAIDS/RAID_4/DISCO_2/" + i + inicio.getNombreArchivo();
-            System.out.println(ruta1+" "+ruta2);
+            System.out.println(ruta1 + " " + ruta2);
             file1 = new File(ruta1);
             file2 = new File(ruta2);
             if (file1.exists() && file2.exists()) {
@@ -230,8 +228,7 @@ public class Raid4Controller implements Serializable {
         String[] inputs = null;
         inputs = new String[input.length() / 8];
         int k = 0;
-        for (int i = 0; i < input.length() / 8; i++)
-        {
+        for (int i = 0; i < input.length() / 8; i++) {
             inputs[i] = "";
         }
         for (int i = 0; i < input.length(); i += 8) {
