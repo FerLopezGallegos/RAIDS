@@ -66,12 +66,29 @@ public class Raid5Controller implements Serializable {
         String seg1 = this.convertirABinario(segmento.substring(0, segmento.length() / 2));
         String seg2 = this.convertirABinario(segmento.substring(segmento.length() / 2, segmento.length()));
         String paridad = xor(seg1, seg2);
-        String ruta1 = "RAIDS/RAID_5/DISCO_1/" + iteracion + nombre;
-        String ruta2 = "RAIDS/RAID_5/DISCO_2/" + iteracion + nombre;
-        String ruta3 = "RAIDS/RAID_5/DISCO_3/" + iteracion + nombre;
-        BloqueRaid5 bloque1 = new Raid5Controller.BloqueRaid5(iteracion, segmentos.size(), TipoRaid.RAID0, seg1, nombre, TipoBloque.NORMAL);
-        BloqueRaid5 bloque2 = new Raid5Controller.BloqueRaid5(iteracion, segmentos.size(), TipoRaid.RAID0, seg2, nombre, TipoBloque.NORMAL);
-        BloqueRaid5 bloque3 = new Raid5Controller.BloqueRaid5(iteracion, segmentos.size(), TipoRaid.RAID0, paridad, nombre, TipoBloque.PARIDAD);
+        String ruta1 = "";
+        String ruta2 = "";
+        String ruta3 = "";
+        switch (discoParidad){
+            case 1:
+                ruta1 = "RAIDS/RAID_5/DISCO_1/p" + iteracion + nombre;
+                ruta2 = "RAIDS/RAID_5/DISCO_2/" + iteracion + nombre;
+                ruta3 = "RAIDS/RAID_5/DISCO_3/" + iteracion + nombre;
+                break;
+            case 2:
+                ruta1 = "RAIDS/RAID_5/DISCO_1/" + iteracion + nombre;
+                ruta2 = "RAIDS/RAID_5/DISCO_2/p" + iteracion + nombre;
+                ruta3 = "RAIDS/RAID_5/DISCO_3/" + iteracion + nombre;
+                break;
+            case 3:
+                ruta1 = "RAIDS/RAID_5/DISCO_1/" + iteracion + nombre;
+                ruta2 = "RAIDS/RAID_5/DISCO_2/" + iteracion + nombre;
+                ruta3 = "RAIDS/RAID_5/DISCO_3/p" + iteracion + nombre;
+                break;
+        }
+        BloqueRaid5 bloque1 = new Raid5Controller.BloqueRaid5(iteracion, segmentos.size(), TipoRaid.RAID5, seg1, nombre, TipoBloque.NORMAL);
+        BloqueRaid5 bloque2 = new Raid5Controller.BloqueRaid5(iteracion, segmentos.size(), TipoRaid.RAID5, seg2, nombre, TipoBloque.NORMAL);
+        BloqueRaid5 bloque3 = new Raid5Controller.BloqueRaid5(iteracion, segmentos.size(), TipoRaid.RAID5, paridad, nombre, TipoBloque.PARIDAD);
         File archivo1 = new File(ruta1);
         File archivo2 = new File(ruta2);
         File archivo3 = new File(ruta3);
@@ -111,7 +128,7 @@ public class Raid5Controller implements Serializable {
         }
     }
 
-    String xor(String s1, String s2) {
+    private String xor(String s1, String s2) {
         String res = "";
         for (int i = 0; i < s1.length(); i++) {
             if (s1.charAt(i) == s2.charAt(i)) {
@@ -140,6 +157,7 @@ public class Raid5Controller implements Serializable {
     }
 
     public void cargarArchivo(File file) {
+        this.segmentos.clear();
         try {
             this.repartirArchivo(file);
         } catch (Exception e) {

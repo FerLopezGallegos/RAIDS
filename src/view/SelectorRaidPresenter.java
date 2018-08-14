@@ -71,6 +71,7 @@ public class SelectorRaidPresenter {
 
     void raid4(ActionEvent e) {
         System.out.println("AUCH 4");
+        this.so.getControladorRaid4().cargarArchivo(file);
         this.vpp.agregarArchivoRaid(file, TipoRaid.RAID4);
         this.sr.close();
     }
