@@ -135,7 +135,7 @@ public class Raid1Controller {
                 e.printStackTrace();
             }
         }
-        else if (file1.exists()){
+        else if (file2.exists()){
             try {
                 Scanner scan = new Scanner(file2);
                 while (scan.hasNextLine()){
@@ -144,6 +144,9 @@ public class Raid1Controller {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        else {
+            return null;
         }
         return archivoCompleto;
     }

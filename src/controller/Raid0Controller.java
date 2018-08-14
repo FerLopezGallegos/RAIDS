@@ -130,6 +130,9 @@ public class Raid0Controller implements Serializable {
                 System.out.println(bloque.getNombreArchivo());
                 if (bloque != null) {
                     ArrayList<Bloque> completo = this.buscarArchivos(bloque);
+                    if(completo == null){
+                        return null;
+                    }
                     for (int i = 0; i < completo.size(); i++) {
                         archivoCompleto += completo.get(i).getContenido();
                     }
@@ -137,6 +140,9 @@ public class Raid0Controller implements Serializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        else{
+            return null;
         }
         return archivoCompleto;
     }
@@ -162,6 +168,9 @@ public class Raid0Controller implements Serializable {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+            }
+            else{
+                return null;
             }
         }
         return completo;

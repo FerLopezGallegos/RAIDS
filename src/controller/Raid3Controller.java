@@ -8,11 +8,13 @@ package controller;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -28,7 +30,7 @@ import model.TipoRaid;
  *
  * @author Vandal
  */
-public class Raid3Controller {
+public class Raid3Controller implements Serializable {
 
     ArrayList<String> infoArchivoParidad;
     int numDiscos = 4;
@@ -126,30 +128,32 @@ public class Raid3Controller {
         int j = 0;
         for (int i = 0; i < string.length(); i++) {
             String ruta = "RAIDS/RAID_3/DISCO_" + (i % 3 + 1) + "/" + i + file.getName();
-            BloqueRaid3 bloque = new Raid3Controller.BloqueRaid3(i, string.length(), TipoRaid.RAID0, string.substring(i, i + 1), file.getName());
+            BloqueRaid3 bloque = new Raid3Controller.BloqueRaid3(i, string.length(), TipoRaid.RAID3, string.substring(i, i + 1), file.getName());
             File archivo;
 
             archivo = new File(ruta);
             BufferedWriter bw;
 
             try {
-                bw = new BufferedWriter(new FileWriter(archivo));
-                bw.write(string.substring(i, i + 1));
-                bw.close();
+                FileOutputStream fileOut = new FileOutputStream(new File(ruta));
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(bloque);
+                out.close();
+                fileOut.close();
 
-            } catch (IOException ex) {
-                Logger.getLogger(Raid3Controller.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
 
-            if (i % 3 == 2 || i == string.length()-1) {
-                int ini = i - (i%3);
-                String rutaParidad = "RAIDS/RAID_3/DISCO_4" + "/p"+ ini + "_" + i + file.getName();
+            if (i % 3 == 2 || i == string.length() - 1) {
+                int ini = i - (i % 3);
+                String rutaParidad = "RAIDS/RAID_3/DISCO_4" + "/p" + ini + "_" + i + "_" + file.getName();
                 File archivoParidad;
                 archivoParidad = new File(rutaParidad);
                 BufferedWriter bwp;
                 try {
                     bwp = new BufferedWriter(new FileWriter(archivoParidad));
-                    for (int k = ini ; k <= i; k++) {
+                    for (int k = ini; k <= i; k++) {
                         bwp.write(this.infoArchivoParidad.get(k) + "\n");
 
                     }
@@ -160,6 +164,67 @@ public class Raid3Controller {
             }
         }
 
+    }
+
+    public String armar(String string) {
+        String ruta = "RAIDS/RAID_3/DISCO_1/0" + string;
+        ruta = ruta.trim();
+        File file = new File(ruta);
+        Bloque bloque = null;
+        String archivoCompleto = "";
+        if (file.exists()) {
+            try {
+                FileInputStream fileIn = new FileInputStream(new File(ruta));
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                bloque = (Bloque) in.readObject();
+                in.close();
+                fileIn.close();
+                System.out.println(bloque.getNombreArchivo());
+                if (bloque != null) {
+                    ArrayList<Bloque> completo = this.buscarArchivos(bloque);
+                    if(completo == null){
+                        return null;
+                    }
+                    for (int i = 0; i < completo.size(); i++) {
+                        archivoCompleto += completo.get(i).getContenido();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            return null;
+        }
+        return archivoCompleto;
+    }
+
+    public ArrayList<Bloque> buscarArchivos(Bloque inicio) {
+        ArrayList<Bloque> completo = new ArrayList<>();
+        int cantidad = inicio.getNumeroTotal();
+        completo.add(inicio);
+        String ruta;
+        File file;
+        BloqueRaid3 nuevo;
+        for (int i = 1; i < cantidad; i++) {
+            ruta = "RAIDS/RAID_3/DISCO_" + (i % 3 + 1) + "/" + i + inicio.getNombreArchivo();
+            file = new File(ruta);
+            if (file.exists()) {
+                try {
+                    FileInputStream fileIn = new FileInputStream(file);
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    nuevo = (BloqueRaid3) in.readObject();
+                    completo.add(nuevo);
+                    in.close();
+                    fileIn.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                return null;
+            }
+        }
+        return completo;
     }
 
 }
