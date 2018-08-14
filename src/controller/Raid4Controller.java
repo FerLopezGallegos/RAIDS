@@ -97,7 +97,7 @@ public class Raid4Controller implements Serializable {
 
     public String convertirABinario(String string) { //can not ºº×Ö
         char[] strChar = string.toCharArray();
-        String result = "";
+        String res = "";
         for (int i = 0; i < strChar.length; i++) {
 
             String temp = Integer.toBinaryString(strChar[i]);
@@ -106,9 +106,9 @@ public class Raid4Controller implements Serializable {
                 k++;
                 temp = "0" + temp;
             }
-            result += temp + "";
+            res += temp + "";
         }
-        return result;
+        return res;
     }
 
     public void cargarArchivo(File file) {
@@ -224,21 +224,21 @@ public class Raid4Controller implements Serializable {
     }
 
     public static String convertirAString(String input) {
-        String output = "";
-        String[] inputs = null;
-        inputs = new String[input.length() / 8];
+        String res = "";
+        String[] string = null;
+        string = new String[input.length() / 8];
         int k = 0;
         for (int i = 0; i < input.length() / 8; i++) {
-            inputs[i] = "";
+            string[i] = "";
         }
         for (int i = 0; i < input.length(); i += 8) {
-            inputs[k] = input.substring(i, i + 8) + "";
+            string[k] = input.substring(i, i + 8) + "";
             k++;
         }
-        for (int i = 0; i < inputs.length; i++) {
-            int temp = Integer.parseInt(inputs[i], 2);
-            output = output + (char) temp;
+        for (int i = 0; i < string.length; i++) {
+            int temp = Integer.parseInt(string[i], 2);
+            res = res + (char) temp;
         }
-        return output;
+        return res;
     }
 }
