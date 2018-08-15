@@ -54,27 +54,38 @@ public class SelectorArchivoPresenter {
     private void aceptar(ActionEvent e) {
         String nombreArchivo = this.sr.combo.getSelectionModel().getSelectedItem().toString();
         TipoRaid tipo = vpp.tipoRaidArchivo(nombreArchivo);
-        String texto = "";
+        String texto = null;
         switch (tipo) {
             case RAID0:
                 System.out.println("Desfragmentar raid 0");
                 texto = this.so.getControladorRaid0().armar(nombreArchivo);
-                this.vpp.vp.tf.setText(texto);
+                if(texto!= null){
+                    this.vpp.vp.tf.setText(texto);
+                }
+                else{
+                    this.mostrarAlerta();
+                }
                 break;
             case RAID1:
                 System.out.println("Desfragmentar raid 1");
                 texto = this.so.getControladorRaid1().armar(nombreArchivo);
-                this.vpp.vp.tf.setText(texto);
+                if(texto!=null){
+                    this.vpp.vp.tf.setText(texto);
+                }
+                else{
+                    this.mostrarAlerta();
+                }
+                
+                
                 break;
             case RAID2:
                 System.out.println("Desfragmentar raid 2");
                 break;
             case RAID3:
                 System.out.println("Desfragmentar raid 3");
-                String res = this.so.getControladorRaid3().armar(nombreArchivo);
-                if (res != null) {
-                    this.vpp.vp.tf.setText(res);
-                    texto = res;
+                texto = this.so.getControladorRaid3().armar(nombreArchivo);
+                if (texto != null) {
+                    this.vpp.vp.tf.setText(texto);
                 } else {
                     this.mostrarAlerta();
                     this.sr.close();
@@ -82,27 +93,45 @@ public class SelectorArchivoPresenter {
 
                 break;
             case RAID4:
-                texto = this.so.getControladorRaid4().armar(nombreArchivo);
-                this.vpp.vp.tf.setText(texto);
                 System.out.println("Desfragmentar raid 4");
+                texto = this.so.getControladorRaid4().armar(nombreArchivo);
+                if(texto != null){
+                    this.vpp.vp.tf.setText(texto);
+                }
+                else{
+                    this.mostrarAlerta();
+                }
+                
                 break;
             case RAID5:
-                texto = this.so.getControladorRaid5().armar(nombreArchivo);
-                this.vpp.vp.tf.setText(texto);
                 System.out.println("Desfragmentar raid 5");
+                texto = this.so.getControladorRaid5().armar(nombreArchivo);
+                if(texto != null){
+                    this.vpp.vp.tf.setText(texto);
+                }
+                else{
+                    this.mostrarAlerta();
+                }
+                
                 break;
             case RAID6:
-                texto = this.so.getControladorRaid6().armar(nombreArchivo);
-                this.vpp.vp.tf.setText(texto);
                 System.out.println("Desfragmentar raid 6");
+                texto = this.so.getControladorRaid6().armar(nombreArchivo);
+                if(texto != null){
+                    this.vpp.vp.tf.setText(texto);
+                }
+                else{
+                    this.mostrarAlerta();
+                }
+                
                 break;
         }
-        if (texto == "") {
-            this.mostrarAlerta();
-            this.sr.close();
+        
+        if(texto != null){
+            this.vpp.vp.caracteres.setText("" + texto.length());
+            this.vpp.vp.nombreArchivo.setText(nombreArchivo);
+            
         }
-        this.vpp.vp.caracteres.setText("" + texto.length());
-        this.vpp.vp.nombreArchivo.setText(nombreArchivo);
         this.sr.close();
     }
 

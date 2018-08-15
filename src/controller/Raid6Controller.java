@@ -42,6 +42,9 @@ public class Raid6Controller implements Serializable {
                 fileIn.close();
                 if (bloque != null) {
                     ArrayList<Raid6Controller.BloqueRaid6> completo = this.buscarArchivos(bloque);
+                    if(completo == null){
+                        return null;
+                    }
                     for (int i = 0; i < completo.size(); i++) {
                         archivoCompleto += this.convertirAString(completo.get(i).getContenido());
                         System.out.println(archivoCompleto.length());
@@ -50,6 +53,9 @@ public class Raid6Controller implements Serializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        else{
+            return null;
         }
 
         return archivoCompleto;
@@ -129,6 +135,9 @@ public class Raid6Controller implements Serializable {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+            }
+            else{
+                return null;
             }
         }
         return completo;
