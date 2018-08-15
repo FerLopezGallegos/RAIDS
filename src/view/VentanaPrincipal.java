@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -24,6 +25,9 @@ public class VentanaPrincipal extends BorderPane {
     
     Button btnSubir;
     Button btnMostrar;
+    TextArea tf;
+    TextField nombreArchivo;
+    TextField caracteres;
     
     public VentanaPrincipal(SO so){
         
@@ -42,7 +46,11 @@ public class VentanaPrincipal extends BorderPane {
         btnSubir.setPrefSize(150, 40);
         this.setLeft(btnMostrar);
         btnMostrar.setPrefSize(150, 40);
-        vb.getChildren().addAll(btnSubir, btnMostrar);
+        TextField tf1 = new TextField("César Bravo");
+        tf1.setEditable(false);
+        TextField tf2 = new TextField("Fernanda López");
+        tf2.setEditable(false);
+        vb.getChildren().addAll(btnSubir, btnMostrar, tf1, tf2);
         vb.setSpacing(20);
         vb.setAlignment(Pos.CENTER_LEFT);
         vb.setPadding(new Insets(20,20,20,20));
@@ -51,11 +59,28 @@ public class VentanaPrincipal extends BorderPane {
     
     private Node panelCentral(){
         BorderPane vb = new BorderPane();
-        TextField tf = new TextField();
-        tf.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        nombreArchivo = new TextField();
+        nombreArchivo.setEditable(false);
+        nombreArchivo.setPrefWidth(500);
+        this.caracteres = new TextField();
+        this.caracteres.setEditable(false);
+        this.caracteres.setMinWidth(200);
+        
+        HBox hb = new HBox();
+        hb.setSpacing(10);
+        hb.setPadding(new Insets(0,0,10,0));
+        hb.getChildren().addAll(nombreArchivo, caracteres);
+        hb.setAlignment(Pos.CENTER_LEFT);
+        
+        tf = new TextArea();
         tf.setEditable(false);
+        tf.autosize();
+        tf.setWrapText(true);
+        
+        vb.setTop(hb);
         vb.setCenter(tf);
         vb.setPadding(new Insets(10));
+        
         return vb;
     }
     

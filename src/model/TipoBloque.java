@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package model;
 
 /**
  *
  * @author Vandal
  */
-public class Raid2Controller {
-    
+public enum TipoBloque {
+    NORMAL,PARIDAD;
 }
