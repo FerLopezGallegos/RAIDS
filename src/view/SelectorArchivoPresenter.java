@@ -57,7 +57,6 @@ public class SelectorArchivoPresenter {
         String texto = null;
         switch (tipo) {
             case RAID0:
-                //System.out.println("Desfragmentar raid 0");
                 texto = this.so.getControladorRaid0().armar(nombreArchivo);
                 if(texto!= null){
                     this.vpp.vp.tf.setText(texto);
@@ -67,7 +66,6 @@ public class SelectorArchivoPresenter {
                 }
                 break;
             case RAID1:
-                //System.out.println("Desfragmentar raid 1");
                 texto = this.so.getControladorRaid1().armar(nombreArchivo);
                 if(texto!=null){
                     this.vpp.vp.tf.setText(texto);
@@ -79,7 +77,6 @@ public class SelectorArchivoPresenter {
                 
                 break;
             case RAID3:
-                System.out.println("Desfragmentar raid 3");
                 texto = this.so.getControladorRaid3().armar(nombreArchivo);
                 if (texto != null) {
                     this.vpp.vp.tf.setText(texto);
@@ -89,7 +86,6 @@ public class SelectorArchivoPresenter {
                 }
                 break;
             case RAID4:
-                System.out.println("Desfragmentar raid 4");
                 texto = this.so.getControladorRaid4().armar(nombreArchivo);
                 if(texto != null){
                     this.vpp.vp.tf.setText(texto);
@@ -100,7 +96,6 @@ public class SelectorArchivoPresenter {
                 
                 break;
             case RAID5:
-                System.out.println("Desfragmentar raid 5");
                 texto = this.so.getControladorRaid5().armar(nombreArchivo);
                 if(texto != null){
                     this.vpp.vp.tf.setText(texto);
@@ -111,7 +106,6 @@ public class SelectorArchivoPresenter {
                 
                 break;
             case RAID6:
-                System.out.println("Desfragmentar raid 6");
                 texto = this.so.getControladorRaid6().armar(nombreArchivo);
                 if(texto != null){
                     this.vpp.vp.tf.setText(texto);

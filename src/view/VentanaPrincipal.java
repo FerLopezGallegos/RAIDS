@@ -46,7 +46,11 @@ public class VentanaPrincipal extends BorderPane {
         btnSubir.setPrefSize(150, 40);
         this.setLeft(btnMostrar);
         btnMostrar.setPrefSize(150, 40);
-        vb.getChildren().addAll(btnSubir, btnMostrar);
+        TextField tf1 = new TextField("César Bravo");
+        tf1.setEditable(false);
+        TextField tf2 = new TextField("Fernanda López");
+        tf2.setEditable(false);
+        vb.getChildren().addAll(btnSubir, btnMostrar, tf1, tf2);
         vb.setSpacing(20);
         vb.setAlignment(Pos.CENTER_LEFT);
         vb.setPadding(new Insets(20,20,20,20));
