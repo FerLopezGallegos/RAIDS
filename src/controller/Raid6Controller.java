@@ -47,7 +47,7 @@ public class Raid6Controller implements Serializable {
                     }
                     for (int i = 0; i < completo.size(); i++) {
                         archivoCompleto += this.convertirAString(completo.get(i).getContenido());
-                        System.out.println(archivoCompleto.length());
+                        //System.out.println(archivoCompleto.length());
                     }
                 }
             } catch (Exception e) {
@@ -182,7 +182,7 @@ public class Raid6Controller implements Serializable {
         String seg1 = this.convertirABinario(segmento.substring(0, segmento.length() / 2));
         String seg2 = this.convertirABinario(segmento.substring(segmento.length() / 2, segmento.length()));
         String paridad = xor(seg1, seg2);
-        String paridad1 = paridad.substring(iteracion, paridad.length()/2);
+        String paridad1 = paridad.substring(0, paridad.length()/2);
         String paridad2 = paridad.substring(paridad.length()/2, paridad.length());
         String ruta1 = "";
         String ruta2 = "";
@@ -268,19 +268,16 @@ public class Raid6Controller implements Serializable {
     }
 
     public String convertirABinario(String string) {
-        char[] strChar = string.toCharArray();
-        String res = "";
-        for (int i = 0; i < strChar.length; i++) {
-
-            String temp = Integer.toBinaryString(strChar[i]);
-            int k = 0;
-            while (8 - k >= temp.length()) {
-                k++;
-                temp = "0" + temp;
+        byte[] bytes = string.getBytes();
+        StringBuilder binary = new StringBuilder();
+        for (byte b : bytes) {
+            int val = b;
+            for (int i = 0; i < 8; i++) {
+                binary.append((val & 128) == 0 ? 0 : 1);
+                val <<= 1;
             }
-            res += temp + "";
         }
-        return res;
+        return binary.toString();
     }
 
     public void cargarArchivo(File file) {

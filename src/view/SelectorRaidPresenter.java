@@ -43,42 +43,36 @@ public class SelectorRaidPresenter {
     }
 
     void raid0(ActionEvent e) {
-        System.out.println("AUCH 0");
         this.so.getControladorRaid0().cargarArchivo(file);
         this.vpp.agregarArchivoRaid(file, TipoRaid.RAID0);
         this.sr.close();
     }
 
     void raid1(ActionEvent e) {
-        System.out.println("AUCH 1");
         this.so.getControladorRaid1().cargarArchivo(file);
         this.vpp.agregarArchivoRaid(file, TipoRaid.RAID1);
         this.sr.close();
     }
 
     void raid3(ActionEvent e) {
-        System.out.println("AUCH 3");
         this.so.getControladorRaid3().cargarArchivo(file);
         this.vpp.agregarArchivoRaid(file, TipoRaid.RAID3);
         this.sr.close();
     }
 
     void raid4(ActionEvent e) {
-        System.out.println("AUCH 4");
         this.so.getControladorRaid4().cargarArchivo(file);
         this.vpp.agregarArchivoRaid(file, TipoRaid.RAID4);
         this.sr.close();
     }
 
     void raid5(ActionEvent e) {
-        System.out.println("AUCH 5");
         this.so.getControladorRaid5().cargarArchivo(file);
         this.vpp.agregarArchivoRaid(file, TipoRaid.RAID5);
         this.sr.close();
     }
 
     void raid6(ActionEvent e) {
-        System.out.println("AUCH 6");
         this.so.getControladorRaid6().cargarArchivo(file);
         this.vpp.agregarArchivoRaid(file, TipoRaid.RAID6);
         this.sr.close();

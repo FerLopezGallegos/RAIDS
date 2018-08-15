@@ -60,7 +60,7 @@ public class Raid1Controller {
 
             i = 1;
             for (String bloque : bloques) {
-                System.out.println("bloque " + i + bloque + "\n");
+                //System.out.println("bloque " + i + bloque + "\n");
                 i++;
             }
 

@@ -47,7 +47,7 @@ public class Raid5Controller implements Serializable {
                     }
                     for (int i = 0; i < completo.size(); i++) {
                         archivoCompleto += this.convertirAString(completo.get(i).getContenido());
-                        System.out.println(archivoCompleto.length());
+                        //System.out.println(archivoCompleto.length());
                     }
                 }
             } catch (Exception e) {
@@ -64,9 +64,9 @@ public class Raid5Controller implements Serializable {
     public ArrayList<Raid5Controller.BloqueRaid5> buscarArchivos(Raid5Controller.BloqueRaid5 inicio) {
         ArrayList<Raid5Controller.BloqueRaid5> completo = new ArrayList<>();
         int cantidad = inicio.getNumeroTotal();
-        String ruta1="";
-        String ruta2="";
-        String ruta3="";
+        String ruta1 = "";
+        String ruta2 = "";
+        String ruta3 = "";
         File file1;
         File file2;
         File file3;
@@ -111,15 +111,21 @@ public class Raid5Controller implements Serializable {
                     fileIn = new FileInputStream(file1);
                     in = new ObjectInputStream(fileIn);
                     nuevo = (Raid5Controller.BloqueRaid5) in.readObject();
-                    if (nuevo.tipoB==TipoBloque.NORMAL) completo.add(nuevo);
+                    if (nuevo.tipoB == TipoBloque.NORMAL) {
+                        completo.add(nuevo);
+                    }
                     fileIn = new FileInputStream(file2);
                     in = new ObjectInputStream(fileIn);
                     nuevo = (Raid5Controller.BloqueRaid5) in.readObject();
-                    if (nuevo.tipoB==TipoBloque.NORMAL) completo.add(nuevo);
+                    if (nuevo.tipoB == TipoBloque.NORMAL) {
+                        completo.add(nuevo);
+                    }
                     fileIn = new FileInputStream(file3);
                     in = new ObjectInputStream(fileIn);
                     nuevo = (Raid5Controller.BloqueRaid5) in.readObject();
-                    if (nuevo.tipoB==TipoBloque.NORMAL) completo.add(nuevo);
+                    if (nuevo.tipoB == TipoBloque.NORMAL) {
+                        completo.add(nuevo);
+                    }
                     in.close();
                     fileIn.close();
                 } catch (Exception ex) {
@@ -245,19 +251,17 @@ public class Raid5Controller implements Serializable {
         return res;
     }
 
-    public String convertirABinario(String string) { //can not ºº×Ö
-        char[] strChar = string.toCharArray();
-        String res = "";
-        for (int i = 0; i < strChar.length; i++) {
-            String temp = Integer.toBinaryString(strChar[i]);
-            int k = 0;
-            while (8 - k >= temp.length()) {
-                k++;
-                temp = "0" + temp;
+    public String convertirABinario(String string) {
+        byte[] bytes = string.getBytes();
+        StringBuilder binary = new StringBuilder();
+        for (byte b : bytes) {
+            int val = b;
+            for (int i = 0; i < 8; i++) {
+                binary.append((val & 128) == 0 ? 0 : 1);
+                val <<= 1;
             }
-            res += temp + "";
         }
-        return res;
+        return binary.toString();
     }
 
     public void cargarArchivo(File file) {

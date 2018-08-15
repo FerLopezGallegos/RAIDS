@@ -128,7 +128,7 @@ public class Raid0Controller implements Serializable {
                 bloque = (Bloque) in.readObject();
                 in.close();
                 fileIn.close();
-                System.out.println(bloque.getNombreArchivo());
+                //System.out.println(bloque.getNombreArchivo());
                 if (bloque != null) {
                     ArrayList<Bloque> completo = this.buscarArchivos(bloque);
                     if(completo == null){

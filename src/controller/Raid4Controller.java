@@ -50,8 +50,12 @@ public class Raid4Controller implements Serializable {
 
     public void crearArchivosSegmento(int iteracion, String nombre) {
         String segmento = this.segmentos.get(iteracion);
-        String seg1 = this.convertirABinario(segmento.substring(0, segmento.length() / 2));
-        String seg2 = this.convertirABinario(segmento.substring(segmento.length() / 2, segmento.length()));
+        String seg1 = segmento.substring(0, segmento.length() / 2);
+        String seg2 = segmento.substring(segmento.length() / 2, segmento.length());
+        //System.out.println(seg1.length()+" ; "+seg2.length());
+        seg1 = this.convertirABinario(seg1);
+        seg2 = this.convertirABinario(seg2);
+        //System.out.println(seg1.length()+" ; "+seg2.length());
         String paridad = xor(seg1, seg2);
         String ruta1 = "RAIDS/RAID_4/DISCO_1/" + iteracion + nombre;
         String ruta2 = "RAIDS/RAID_4/DISCO_2/" + iteracion + nombre;
@@ -95,18 +99,17 @@ public class Raid4Controller implements Serializable {
         return res;
     }
 
-    public String convertirABinario(String string) { //can not ºº×Ö
-        char[] strChar = string.toCharArray();
+    public String convertirABinario(String string) {
         String res = "";
-        for (int i = 0; i < strChar.length; i++) {
-
-            String temp = Integer.toBinaryString(strChar[i]);
+        string = string.replace("\n", "\\");
+        for (int i = 0; i < string.length(); i++) {
+            String temp = Integer.toBinaryString(string.charAt(i));
             int k = 0;
             while (8 - k >= temp.length()) {
                 k++;
                 temp = "0" + temp;
             }
-            res += temp + "";
+            res += temp;
         }
         return res;
     }
@@ -179,7 +182,7 @@ public class Raid4Controller implements Serializable {
                     }
                     for (int i = 0; i < completo.size(); i++) {
                         archivoCompleto += this.convertirAString(completo.get(i).getContenido());
-                        System.out.println(archivoCompleto.length());
+                        //System.out.println(archivoCompleto.length());
                     }
                 }
             } catch (Exception e) {
@@ -206,7 +209,7 @@ public class Raid4Controller implements Serializable {
         for (int i = 0; i < cantidad; i++) {
             ruta1 = "RAIDS/RAID_4/DISCO_1/" + i + inicio.getNombreArchivo();
             ruta2 = "RAIDS/RAID_4/DISCO_2/" + i + inicio.getNombreArchivo();
-            System.out.println(ruta1 + " " + ruta2);
+            //System.out.println(ruta1 + " " + ruta2);
             file1 = new File(ruta1);
             file2 = new File(ruta2);
             if (file1.exists() && file2.exists()) {
@@ -248,6 +251,7 @@ public class Raid4Controller implements Serializable {
             int temp = Integer.parseInt(string[i], 2);
             res = res + (char) temp;
         }
+        res = res.replace("\\", "\n");
         return res;
     }
 }
